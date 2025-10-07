@@ -1,5 +1,15 @@
 class ApplicationController < ActionController::Base
   before_action :basic_auth
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    # 新規登録時に:nameパラメータを許可
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    # アカウント更新時に:nameパラメータを許可
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
 
   private
 

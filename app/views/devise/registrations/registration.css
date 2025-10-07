@@ -1,0 +1,69 @@
+/* 新規登録フォーム全体のスタイル */
+.signup-form {
+  /* space-y-6: 子要素間の垂直マージン */
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.signup-form > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+/* 最初は非表示にする */
+.signup-form.hidden {
+  display: none;
+}
+
+/* 見出し (h2) のスタイル */
+.signup-form-header {
+  font-size: 1.25rem; /* text-xl */
+  line-height: 1.75rem;
+  font-weight: 600; /* font-semibold */
+  color: rgb(55 65 81); /* text-gray-700 */
+}
+
+/* ラベル (label) のスタイル */
+.signup-form-label {
+  display: block; /* block */
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.25rem;
+  font-weight: 500; /* font-medium */
+  color: rgb(55 65 81); /* text-gray-700 */
+  margin-bottom: 0.25rem; /* mb-1 */
+}
+
+/* 入力欄 (input) のスタイル */
+.signup-form-input {
+  width: 100%; /* w-full */
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem;
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem;
+  border-width: 1px; /* border */
+  border-color: rgb(209 213 219); /* border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition-property: all; /* transition */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms; /* duration-150 */
+}
+
+.signup-form-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: rgb(99 102 241); /* focus:ring-indigo-500 */
+  box-shadow: 0 0 0 2px var(--tw-ring-color);
+  border-color: rgb(99 102 241); /* focus:border-indigo-500 */
+}
+
+/* リンク (a) のスタイル */
+.signup-form-link {
+  font-weight: 500; /* font-medium */
+  color: rgb(79 70 229); /* text-indigo-600 */
+}
+
+.signup-form-link:hover {
+  color: rgb(99 102 241); /* hover:text-indigo-500 */
+}
