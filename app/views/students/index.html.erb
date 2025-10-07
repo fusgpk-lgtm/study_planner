@@ -1,0 +1,104 @@
+
+<body class="min-h-screen">
+
+    <!-- アプリケーションヘッダー -->
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="header-title">個別指導カリキュラム管理</h1>
+            <button id="homeButton" onclick="showHome()" class="home-button">
+                <i data-lucide="home" class="icon"></i>
+                <span class="text">ホームに戻る</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- メインコンテンツコンテナ -->
+    <main class="main-container">
+
+        <!-- 1. 講師ホームビュー（生徒一覧） -->
+        <section id="homeView" class="view-section">
+            <div class="home-view-header">
+                <h2 class="home-view-title">生徒一覧</h2>
+                <button onclick="alert('生徒登録モーダルを開きます')" class="btn-primary">
+                    <i data-lucide="user-plus" class="icon"></i>
+                    生徒登録
+                </button>
+            </div>
+
+            <!-- 今日の指導予定（最上部に表示） -->
+            <div id="todaySchedule" class="today-schedule-card">
+                <h3 class="today-schedule-title">
+                    <i data-lucide="calendar-check" class="icon"></i>
+                    今日の指導予定 (10月7日)
+                </h3>
+                <p id="todayTasks" class="today-schedule-tasks">タスクがありません。</p>
+            </div>
+
+            <!-- 生徒一覧コンテナ -->
+            <div id="studentList" class="student-list-grid">
+                <!-- 生徒カードがここにJSで挿入されます -->
+            </div>
+        </section>
+
+        <!-- 2. 生徒詳細ビュー（カリキュラム・進捗管理） -->
+        <section id="detailView" class="view-section hidden">
+            <h2 id="studentNameHeader" class="detail-view-header"></h2>
+            <p id="studentGoal" class="detail-view-goal"></p>
+
+            <!-- 詳細タブ -->
+            <div class="detail-tabs-container">
+                <nav class="detail-tabs-nav" aria-label="Tabs">
+                    <a href="#" class="tab-link tab-link-active" aria-current="page">カリキュラム</a>
+                    <a href="#" onclick="alert('概要タブに移動します')" class="tab-link tab-link-inactive">概要・成績</a>
+                    <a href="#" onclick="alert('授業履歴タブに移動します')" class="tab-link tab-link-inactive">授業履歴</a>
+                </nav>
+            </div>
+
+            <!-- カリキュラムテーブル -->
+            <div class="curriculum-table-container">
+                <table class="curriculum-table">
+                    <thead class="curriculum-table-header">
+                        <tr>
+                            <th class="curriculum-table-th w-1/4">教材 / 単元名</th>
+                            <th class="curriculum-table-th w-3/4">年間スケジュール (2025年 9月-12月)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="curriculumTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- カリキュラムの行がここにJSで挿入されます -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="add-unit-button-container">
+                <button onclick="alert('新しい単元を追加するモーダルを開きます')" class="btn-primary add-unit-button">
+                    <i data-lucide="plus-circle" class="icon"></i>
+                    単元を追加
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScriptにデータを渡すためのスクリプト -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // モックデータをグローバルな `window` オブジェクトに設定
+            window.MOCK_DATA = {
+                students: [
+                    { id: 's001', name: '佐藤 健太', goal: '早稲田大・国際教養', progress: 75, nextLesson: '10/7 19:30 英文解釈', nextDate: '2025-10-07' },
+                    { id: 's002', name: '田中 美咲', goal: '慶應義塾大・経済', progress: 45, nextLesson: '10/8 17:00 英文法演習', nextDate: '2025-10-08' },
+                    { id: 's003', name: '山本 太郎', goal: '明治大・理工', progress: 90, nextLesson: '10/9 16:00 長文読解', nextDate: '2025-10-09' },
+                ],
+                curriculum: [
+                    { id: 'c001', studentId: 's001', textbook: 'Vintage', unit: '関係詞', startDate: '2025-09-01', endDate: '2025-09-15', completed: 100, isMajor: true },
+                    { id: 'c002', studentId: 's001', textbook: 'ポレポレ', unit: '基本構文(1-10)', startDate: '2025-09-16', endDate: '2025-10-10', completed: 80, isMajor: true },
+                    { id: 'c003', studentId: 's001', textbook: 'ポレポレ', unit: '応用構文(11-20)', startDate: '2025-10-11', endDate: '2025-11-05', completed: 10, isMajor: true },
+                    { id: 'c004', studentId: 's001', textbook: '速読英単語 必修編', unit: 'Section 1-15', startDate: '2025-09-01', endDate: '2025-12-31', completed: 70, isMajor: false },
+                    { id: 'c101', studentId: 's002', textbook: 'Vintage', unit: '文法(基礎)', startDate: '2025-10-01', endDate: '2025-11-30', completed: 45, isMajor: true },
+                    { id: 'c102', studentId: 's002', textbook: '入門英文解釈の技術70', unit: 'Unit 1-10', startDate: '2025-10-15', endDate: '2025-12-15', completed: 10, isMajor: true },
+                ]
+            };
+        });
+    </script>
+</body>
+</html>
