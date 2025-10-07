@@ -19,10 +19,10 @@
         <section id="homeView" class="view-section">
             <div class="home-view-header">
                 <h2 class="home-view-title">生徒一覧</h2>
-                <button onclick="alert('生徒登録モーダルを開きます')" class="btn-primary">
+                <%= link_to new_student_path, class: "btn-primary" do %>
                     <i data-lucide="user-plus" class="icon"></i>
                     生徒登録
-                </button>
+                <% end %>
             </div>
 
             <!-- 今日の指導予定（最上部に表示） -->
