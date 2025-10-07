@@ -1,24 +1,48 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Usersテーブル
 
-Things you may want to cover:
+| Column | Type   | Options.   |
+|--------|--------|------------|
+| name   | string | null:false |
+| email  | string | null:false, unique:true |
+| encrypted_password | string  | null:false |
+| role   | string | null:false |
 
-* Ruby version
+### Association
+has_many:students
 
-* System dependencies
+## Studentsテーブル
 
-* Configuration
+| Column      | Type   | Options.   |
+|-------------|--------|------------|
+| stu_name    | string | null:false |
+| goal_school | string | null:false |
+| start_date  | date   | null:false |
+| goal_date   | date   | null:false |
 
-* Database creation
+### Association
+has_many:plans
 
-* Database initialization
+## Plansテーブル
 
-* How to run the test suite
+| Column      | Type   | Options.   |
+|-------------|--------|------------|
+| start_date  | date   | null:false |
+| goal_date   | date   | null:false |
+| student_id  | references | foreign_key:true |
+| material_id | references | foreign_key:true |
 
-* Services (job queues, cache servers, search engines, etc.)
+### Association
+belongs_to:student
+belongs_to:material
 
-* Deployment instructions
+## Materialsテーブル
 
-* ...
+| Column         | Type    | Options.   |
+|----------------|---------|------------|
+| title          | string  | null:false |
+| weeks_required | integer | null:false |
+
+### Association
+has_many:plans
