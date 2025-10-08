@@ -1,8 +1,7 @@
 .home-view-header {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  border: 2px solid red !important; /* ←確認用 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 /* タイトル */
 .home-view-title {

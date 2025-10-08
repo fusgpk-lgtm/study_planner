@@ -1,0 +1,50 @@
+<div class="student-detail">
+  <h2 class="student-detail-name"><%= @student.name %> さんのカリキュラム</h2>
+  <p class="student-detail-goal">目標: <%= @student.goal_school %></p>
+
+  <!-- タブ（見た目だけ） -->
+  <div class="student-tabs">
+    <span class="tab active">カリキュラム</span>
+    <span class="tab">概要・成績</span>
+    <span class="tab">授業履歴</span>
+  </div>
+
+  <!-- カリキュラム表 -->
+  <div class="curriculum-container">
+    <table class="curriculum-table">
+      <thead>
+        <tr>
+          <th>教材 / 単元名</th>
+          <th>年間スケジュール</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @student.curriculums.each do |item| %>
+          <tr>
+            <td class="curriculum-textbook">
+              <div class="textbook-title <%= item.major? ? 'major' : '' %>"><%= item.textbook %></div>
+              <div class="textbook-unit <%= item.major? ? 'major' : '' %>"><%= item.unit %></div>
+            </td>
+            <td class="curriculum-progress">
+              <div class="progress-bar-container" title="<%= item.start_date %> ~ <%= item.end_date %>">
+                <div class="progress-bar" style="width: <%= item.completed %>%; background-color: <%= item.completed == 100 ? '#10b981' : '#6366f1' %>;">
+                  <span class="progress-text"><%= item.completed %>%</span>
+                </div>
+              </div>
+              <p class="progress-date">
+                <%= item.start_date.strftime("%m/%d") %> ~ <%= item.end_date.strftime("%m/%d") %>
+              </p>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="add-unit">
+    <%= link_to "#", class: "btn-add" do %>
+      <i data-lucide="plus-circle" class="icon"></i>
+      単元を追加
+    <% end %>
+  </div>
+</div>
