@@ -1,209 +1,126 @@
-/* 
- * students/index.html.erb のためのカスタムスタイルシート
- * Tailwind CSSのユーティリティクラスをまとめています。
- */
-
-/* --- ヘッダー --- */
-.app-header {
-  background-color: #fff; /* bg-white */
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
-  position: sticky; /* sticky */
-  top: 0; /* top-0 */
-  z-index: 10; /* z-10 */
-}
-
-.header-container {
-  max-width: 72rem; /* max-w-6xl */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem; /* px-4 */
-  padding-right: 1rem;
-  padding-top: 1rem; /* py-4 */
-  padding-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-@media (min-width: 640px) {
-  .header-container {
-    padding-left: 1.5rem; /* sm:px-6 */
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .header-container {
-    padding-left: 2rem; /* lg:px-8 */
-    padding-right: 2rem;
-  }
-}
-
-.header-title {
-  font-size: 1.5rem; /* text-2xl */
-  line-height: 2rem;
-  font-weight: 700; /* font-bold */
-  color: rgb(31 41 55); /* text-gray-800 */
-}
-
-.home-button {
-  color: rgb(79 70 229); /* text-indigo-600 */
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms; /* transition duration-150 ease-in-out */
-  display: none; /* hidden */
-}
-
-.home-button:hover {
-  color: rgb(55 48 163); /* hover:text-indigo-800 */
-}
-
-.home-button .icon {
-  width: 1.5rem; /* w-6 */
-  height: 1.5rem; /* h-6 */
-  display: inline-block;
-  margin-right: 0.25rem; /* mr-1 */
-}
-
-.home-button .text {
-  display: none; /* hidden */
-}
-
-@media (min-width: 640px) {
-  .home-button .text {
-    display: inline; /* sm:inline */
-  }
-}
-
-/* --- メインコンテンツ --- */
-.main-container {
-  max-width: 72rem; /* max-w-6xl */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem; /* px-4 */
-  padding-right: 1rem;
-  padding-top: 2rem; /* py-8 */
-  padding-bottom: 2rem;
-}
-
-@media (min-width: 640px) {
-  .main-container {
-    padding-left: 1.5rem; /* sm:px-6 */
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .main-container {
-    padding-left: 2rem; /* lg:px-8 */
-    padding-right: 2rem;
-  }
-}
-
-/* --- ホームビュー --- */
 .home-view-header {
-  display: flex;
-  flex-direction: column; /* flex-col */
-  justify-content: space-between;
-  align-items: flex-start; /* items-start */
-  margin-bottom: 1.5rem; /* mb-6 */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border: 2px solid red !important; /* ←確認用 */
 }
-
-@media (min-width: 640px) {
-  .home-view-header {
-    flex-direction: row; /* sm:flex-row */
-    align-items: center; /* sm:items-center */
-  }
-}
-
+/* タイトル */
 .home-view-title {
   font-size: 1.875rem; /* text-3xl */
-  line-height: 2.25rem;
-  font-weight: 600; /* font-semibold */
-  color: rgb(55 65 81); /* text-gray-700 */
-  margin-bottom: 1rem; /* mb-4 */
+  font-weight: 600;
+  color: #374151;      /* グレー700 */
+  margin: 0;           /* 不要な余白を消す */
 }
 
-@media (min-width: 640px) {
-  .home-view-title {
-    margin-bottom: 0; /* sm:mb-0 */
-  }
+/* メインコンテンツ */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
 }
 
-/* --- 今日の指導予定 --- */
-.today-schedule-card {
-  background-color: #fff; /* bg-white */
-  padding: 1rem; /* p-4 */
-  border-radius: 0.75rem; /* rounded-xl */
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
-  margin-bottom: 2rem; /* mb-8 */
-  border-width: 1px; /* border */
-  border-color: rgb(224 231 255); /* border-indigo-200 */
-}
-
-.today-schedule-title {
-  font-size: 1.25rem; /* text-xl */
-  line-height: 1.75rem;
-  font-weight: 600; /* font-semibold */
-  color: rgb(67 56 202); /* text-indigo-700 */
-  margin-bottom: 0.75rem; /* mb-3 */
-  display: flex;
-  align-items: center;
-}
-
-.today-schedule-title .icon {
-  width: 1.5rem; /* w-6 */
-  height: 1.5rem; /* h-6 */
-  margin-right: 0.5rem; /* mr-2 */
-}
-
-.today-schedule-tasks {
-  color: rgb(75 85 99); /* text-gray-600 */
-}
-
-/* --- 生徒一覧コンテナ --- */
+/* 生徒一覧 */
 .student-list-grid {
   display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr)); /* grid-cols-1 */
-  gap: 1.5rem; /* gap-6 */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 }
 
-@media (min-width: 768px) {
-  .student-list-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
-  }
+.student-card {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  border-left: 4px solid #6366f1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  text-decoration: none;
 }
-
-@media (min-width: 1024px) {
-  .student-list-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* lg:grid-cols-3 */
-  }
+.student-card:hover {
+  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
 }
-
-/* --- 汎用ボタン（生徒登録など） --- */
-.btn-primary {
-  background-color: rgb(79 70 229); /* bg-indigo-600 */
-  color: #fff; /* text-white */
-  font-weight: 700; /* font-bold */
-  padding-top: 0.5rem; /* py-2 */
-  padding-bottom: 0.5rem;
-  padding-left: 1rem; /* px-4 */
-  padding-right: 1rem;
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms; /* transition duration-150 ease-in-out */
+.student-card-header {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.student-card-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+.student-card-goal-badge {
+  font-size: 0.875rem;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+.student-card-goal-full {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+/* 進捗バー */
+.student-card-progress-container {
+  margin-top: 12px;
+}
+.student-card-progress-label {
+  font-size: 0.75rem;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+.student-card-progress-bar-bg {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 10px;
+}
+.progress-bar {
+  height: 10px;
+  border-radius: 9999px;
+  background-color: #6366f1;
+  transition: width 0.3s ease;
+}
+
+/* フッター */
+.student-card-footer {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 16px;
+  padding-top: 12px;
+  font-size: 0.875rem;
+  color: #374151;
+}
+.student-card-footer .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  color: #6366f1;
+}
+.highlight {
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+/* ボタン */
+.btn-primary {
+  background-color: #4f46e5;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: inline-flex;
   align-items: center;
+  text-decoration: none;
 }
-
 .btn-primary:hover {
-  background-color: rgb(67 56 202); /* hover:bg-indigo-700 */
+  background-color: #4338ca;
 }
-
 .btn-primary .icon {
-  width: 1.25rem; /* w-5 */
-  height: 1.25rem; /* h-5 */
-  margin-right: 0.5rem; /* mr-2 */
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }

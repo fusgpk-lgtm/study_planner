@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>StudyPlanner</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>StudyPlanner</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", rel: "stylesheet" %>
     <%= javascript_importmap_tags %>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* Inter Font */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Slate-50 */
-            background-color: #f8fafc;
-        }
-        /* ガントチャート風の進捗バーのカスタムスタイル */
-        .progress-bar {
-            height: 100%;
-            background-color: #6366f1; /* Indigo-500 */
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-    </style>
   </head>
 
   <body>
-    <%= yield %>
+    <header class="app-header">
+      <div class="header-container">
+        <h1 class="header-title">個別指導カリキュラム管理</h1>
+        <%= link_to students_path, class: "home-button" do %>
+          <i data-lucide="home" class="icon"></i>
+          <span class="text">ホームに戻る</span>
+        <% end %>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <%= yield %>
+    </main>
+
+    <script>
+      document.addEventListener("turbo:load", () => lucide.createIcons());
+    </script>
   </body>
 </html>

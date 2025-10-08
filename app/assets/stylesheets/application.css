@@ -9,7 +9,70 @@
  * compiled file so the styles you add here take precedence over styles defined in any other CSS
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
- *
+ */
+
+ /*
  *= require_tree .
  *= require_self
  */
+
+/* CSSの読み込み順序を明確に定義します */
+@import "reset";
+@import "students/index";
+@import "students/new";
+@import "students/show";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #6366f1; /* Indigo-500 */
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f8fafc;
+  margin: 0;
+}
+
+/* ヘッダー */
+.app-header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+.home-button {
+  color: #4f46e5;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.home-button:hover {
+  color: #3730a3;
+}
+.home-button .icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+}
