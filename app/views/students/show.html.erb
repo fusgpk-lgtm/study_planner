@@ -18,26 +18,40 @@
           <th>年間スケジュール</th>
         </tr>
       </thead>
-      <tbody>
-        <% @student.curriculums.each do |item| %>
-          <tr>
-            <td class="curriculum-textbook">
-              <div class="textbook-title <%= item.major? ? 'major' : '' %>"><%= item.textbook %></div>
-              <div class="textbook-unit <%= item.major? ? 'major' : '' %>"><%= item.unit %></div>
-            </td>
-            <td class="curriculum-progress">
-              <div class="progress-bar-container" title="<%= item.start_date %> ~ <%= item.end_date %>">
-                <div class="progress-bar" style="width: <%= item.completed %>%; background-color: <%= item.completed == 100 ? '#10b981' : '#6366f1' %>;">
-                  <span class="progress-text"><%= item.completed %>%</span>
-                </div>
-              </div>
-              <p class="progress-date">
-                <%= item.start_date.strftime("%m/%d") %> ~ <%= item.end_date.strftime("%m/%d") %>
-              </p>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
+      <table class="curriculum-table">
+        <tbody>
+          <% @textbooks.each do |textbook| %>
+            <% textbook.units.each do |unit| %>
+              <% progress = unit.progresses.find_by(student_id: @student.id) %>
+              <% completed = progress ? (progress.completed || 0) : 0 %>
+
+              <tr>
+                <td class="curriculum-textbook">
+                  <div class="textbook-title"><%= textbook.title %></div>
+                  <div class="textbook-unit"><%= unit.title %></div>
+                </td>
+
+                <td class="curriculum-progress">
+                  <div class="progress-bar-container"
+                      title="<%= progress&.start_date&.strftime('%m/%d') %> ~ <%= progress&.end_date&.strftime('%m/%d') %>">
+                    <div class="progress-bar"
+                        style="width: <%= completed %>%;
+                                background-color: <%= completed == 100 ? '#10b981' : '#6366f1' %>;">
+                      <span class="progress-text"><%= completed %>%</span>
+                    </div>
+                  </div>
+
+                  <% if progress&.start_date && progress&.end_date %>
+                    <p class="progress-date">
+                      <%= progress.start_date.strftime('%m/%d') %> ~ <%= progress.end_date.strftime('%m/%d') %>
+                    </p>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </table>
   </div>
 

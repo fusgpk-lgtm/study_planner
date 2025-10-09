@@ -16,4 +16,7 @@ class Student < ApplicationRecord
 
     ((elapsed_days.to_f / total_days) * 100).round
   end
+
+  has_many :progresses, dependent: :destroy
+  has_many :units, through: :progresses
 end

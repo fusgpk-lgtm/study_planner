@@ -12,6 +12,11 @@ class StudentsController < ApplicationController
     redirect_to '/'
   end
 
+  def show
+    @student = Student.find(params[:id])
+    @textbooks = Textbook.includes(units: :progresses)
+  end
+
   private
 
   def student_params

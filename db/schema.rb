@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_07_050751) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_09_031148) do
+  create_table "progresses", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "unit_id", null: false
+    t.integer "status"
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_progresses_on_student_id"
+    t.index ["unit_id"], name: "index_progresses_on_unit_id"
+  end
+
   create_table "students", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "goal_school"
@@ -18,6 +29,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_07_050751) do
     t.date "goal_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "textbooks", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title"
+    t.string "subject"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "units", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title"
+    t.integer "order"
+    t.bigint "textbook_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["textbook_id"], name: "index_units_on_textbook_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
@@ -34,4 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_07_050751) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "progresses", "students"
+  add_foreign_key "progresses", "units"
+  add_foreign_key "units", "textbooks"
 end
