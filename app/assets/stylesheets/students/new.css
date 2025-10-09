@@ -1,61 +1,65 @@
-/*
- * students/new.html.erb のためのカスタムスタイルシート
- */
-
+/* 全体レイアウト */
 .new-student-body {
   min-height: 100vh;
   display: flex;
+  flex-direction: column; /* 縦並びにする */
+  background-color: #f8fafc; /* 背景：やわらかいグレー */
+}
+
+/* 固定ヘッダー */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 1rem 2rem;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1rem; /* p-4 */
+  justify-content: space-between;
 }
 
+/* 中央のフォームコンテナ */
 .new-student-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center; /* 横中央 */
+  align-items: center;     /* 縦中央 */
+  padding: 2rem;
+}
+
+/* カード部分（フォーム本体） */
+.new-student-card {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  max-width: 40rem;
   width: 100%;
-  max-width: 42rem; /* max-w-2xl */
-  background-color: #fff; /* bg-white */
-  padding: 1.5rem; /* p-6 */
-  border-radius: 1rem; /* rounded-2xl */
-  border: 1px solid rgb(241 245 249); /* border-gray-100 */
-  /* カスタムシャドウ */
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  border: 1px solid rgb(241 245 249);
 }
 
-@media (min-width: 640px) {
-  .new-student-container {
-    padding: 2.5rem; /* sm:p-10 */
-  }
-}
-
+/* タイトルなど */
 .new-student-header {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem; /* mb-6 */
-}
-
-.back-button {
-  color: rgb(107 114 128); /* text-gray-500 */
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-  margin-right: 1rem; /* mr-4 */
-}
-
-.back-button:hover {
-  color: rgb(79 70 229); /* hover:text-indigo-600 */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .new-student-title {
-  font-size: 1.875rem; /* text-3xl */
-  line-height: 2.25rem;
-  font-weight: 700; /* font-bold */
-  color: rgb(31 41 55); /* text-gray-800 */
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: rgb(31 41 55);
 }
 
 .new-student-description {
-  color: rgb(107 114 128); /* text-gray-500 */
-  margin-bottom: 2rem; /* mb-8 */
+  color: rgb(107 114 128);
+  margin-bottom: 2rem;
+  text-align: center;
 }
+
+/* 既存フォーム要素はそのまま使用OK */
 
 .form-label {
   display: block;

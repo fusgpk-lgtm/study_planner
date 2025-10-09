@@ -1,59 +1,48 @@
-<body class="new-student-body">
 
-    <!-- メイン登録コンテナ -->
-    <div class="new-student-container">
-        
-        <div class="new-student-header">
-            <button onclick="alert('生徒一覧画面に戻ります')" class="back-button">
-                <i data-lucide="arrow-left" class="icon"></i>
-            </button>
-            <h1 class="new-student-title">新規生徒の登録</h1>
+  <!-- メインコンテンツ（中央カード） -->
+  <div class="new-student-container">
+    <div class="new-student-card">
+      <div class="new-student-header">
+        <button onclick="alert('生徒一覧画面に戻ります')" class="back-button">
+          <i data-lucide="arrow-left" class="icon"></i>
+        </button>
+        <h1 class="new-student-title">新規生徒の登録</h1>
+      </div>
+
+      <p class="new-student-description">
+        生徒の基本情報と目標を設定し、カリキュラム作成の準備をします。
+      </p>
+
+      <%= form_with(model: @student, url: students_path, class: "signup-form") do |form| %>
+        <div>
+          <%= form.label :name, "生徒名", class: "form-label" %>
+          <%= form.text_field :name, class: "form-input", required: true %>
         </div>
-        
-        <p class="new-student-description">生徒の基本情報と目標を設定し、カリキュラム作成の準備をします。</p>
 
-        <!-- メッセージボックス (alertの代替) -->
-        <div id="messageBox" class="hidden p-3 mb-6 text-sm rounded-lg" role="alert"></div>
+        <div>
+          <%= form.label :goal_school, "志望校 / 志望学部", class: "form-label" %>
+          <%= form.text_field :goal_school, class: "form-input", required: true %>
+        </div>
 
-        <!-- 登録フォーム -->
-        <%= form_with(model: @student, url: students_path, id: "studentRegistrationForm", class: "signup-form", local: false) do |form| %>
-            
-            <!-- 1. 生徒名 -->
-            <div>
-                <%= form.label :name, "生徒名", class: "form-label" %> <span class="required-mark">*</span>
-                <%= form.text_field :name, required: true, placeholder: "例: 佐藤 健太", class: "form-input" %>
-            </div>
+        <div class="form-grid">
+          <div>
+            <%= form.label :start_date, "入塾日", class: "form-label" %>
+            <%= form.date_field :start_date, class: "form-input", required: true %>
+          </div>
 
-            <!-- 2. 志望校 (志望校/志望学部) -->
-            <div>
-                <%= form.label :goal_school, "志望校 / 志望学部", class: "form-label" %> <span class="required-mark">*</span>
-                <%= form.text_field :goal_school, required: true, placeholder: "例: 早稲田大・国際教養", class: "form-input" %>
-            </div>
+          <div>
+            <%= form.label :goal_date, "目標受験日", class: "form-label" %>
+            <%= form.date_field :goal_date, class: "form-input", required: true %>
+          </div>
+        </div>
 
-            <!-- 日付関連の入力 (2列レイアウト) -->
-            <div class="form-grid">
-                <!-- 3. 入塾日 -->
-                <div>
-                    <%= form.label :start_date, "入塾日", class: "form-label" %> <span class="required-mark">*</span>
-                    <%= form.date_field :start_date, required: true, class: "form-input" %>
-                </div>
-
-                <!-- 4. 受験日 (目標達成日) -->
-                <div>
-                    <%= form.label :goal_date, "目標受験日", class: "form-label" %> <span class="required-mark">*</span>
-                    <%= form.date_field :goal_date, required: true, class: "form-input" %>
-                </div>
-            </div>
-            
-            <!-- 5. 備考 (オプション情報) -->
-
-            <!-- 登録ボタン -->
-            <%= form.button type: 'submit', id: 'submitButton', class: 'btn-primary submit-button' do %>
-                <i data-lucide="save" class="icon"></i>
-                生徒を登録し、カリキュラム作成に進む
-            <% end %>
+        <%= form.button type: 'submit', class: 'btn-primary submit-button' do %>
+          <i data-lucide="save" class="icon"></i>
+          生徒を登録し、カリキュラム作成に進む
         <% end %>
+      <% end %>
     </div>
+  </div>
 
     <!-- JavaScriptにFirebaseの環境変数を渡すためのスクリプト -->
     <script>
@@ -61,4 +50,3 @@
         // window.__firebase_config = '<%= ENV['FIREBASE_CONFIG_JSON'] %>';
         // window.__initial_auth_token = "<%= @firebase_auth_token %>";
     </script>
-</body>
