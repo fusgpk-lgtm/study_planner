@@ -5,3 +5,4 @@
 
 //= link user/registration.css
 //= link students.css
+//= link teacher.css

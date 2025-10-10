@@ -2,6 +2,16 @@ class ApplicationController < ActionController::Base
   before_action :basic_auth
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def after_sign_in_path_for(resource)
+    if resource.teacher?
+      students_path
+    elsif resource.student?
+      student_path(resource.student)
+    else
+      root_path
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

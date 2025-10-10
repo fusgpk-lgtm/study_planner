@@ -1,0 +1,8 @@
+/* app/assets/stylesheets/students.css */
+.student-wrapper {
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}

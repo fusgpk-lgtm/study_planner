@@ -2,6 +2,7 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_access, only: [:show]
   layout :select_layout
+
   def index
     @students = Student.all
   end
@@ -12,7 +13,7 @@ class StudentsController < ApplicationController
 
   def create
     Student.create(student_params)
-    redirect_to '/'
+    redirect_to students_path
   end
 
   def show
@@ -24,7 +25,7 @@ class StudentsController < ApplicationController
 
   def authorize_access
     @student = Student.find(params[:id])
-    return unless current_user.student? && current_user.id != @student.user_id
+    return unless current_user.student? && current_user.student != @student
 
     redirect_to root_path, alert: 'アクセス権限がありません。'
   end
@@ -39,7 +40,7 @@ class StudentsController < ApplicationController
     elsif current_user.student?
       'student'
     else
-      'application' # fallback
+      'application'
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_09_031148) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_10_080112) do
   create_table "progresses", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "unit_id", null: false
@@ -29,6 +29,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_031148) do
     t.date "goal_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_students_on_user_id"
   end
 
   create_table "textbooks", charset: "utf8mb3", force: :cascade do |t|
@@ -63,5 +65,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_09_031148) do
 
   add_foreign_key "progresses", "students"
   add_foreign_key "progresses", "units"
+  add_foreign_key "students", "users"
   add_foreign_key "units", "textbooks"
 end
