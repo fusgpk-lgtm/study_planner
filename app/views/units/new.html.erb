@@ -1,0 +1,17 @@
+<h2><%= @textbook.title %> に単元を追加</h2>
+
+<%= form_with(model: [@textbook, @unit], local: true) do |f| %>
+  <div class="field">
+    <%= f.label :title, "単元名" %><br>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :order, "並び順（任意）" %><br>
+    <%= f.number_field :order %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "追加する", class: "btn" %>
+  </div>
+<% end %>
