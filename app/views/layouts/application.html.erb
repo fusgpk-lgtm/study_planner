@@ -8,6 +8,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track': 'reload' if Rails.application.assets.find_asset("#{params[:controller]}.css") %>
     <%= javascript_importmap_tags %>
 
     <!-- Lucide Icons -->

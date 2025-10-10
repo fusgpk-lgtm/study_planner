@@ -1,20 +1,42 @@
-<div class="teacher-student-detail">
-  <h2><%= student.name %> さんの進捗管理</h2>
+<div class="student-detail">
+  <div class="student-detail-name"><%= student.name %> さんの進捗管理</div>
+  <div class="student-detail-goal">目標：<%= student.goal_school %></div>
+</div>
 
-  <% textbooks.each do |textbook| %>
-    <div class="textbook-header">
-      <h3><%= textbook.title %></h3>
-      <%= link_to new_textbook_unit_path(textbook), class: "btn-add-unit" do %>
-        <i data-lucide="plus-circle"></i> 単元を追加
+<div class="student-tabs">
+  <div class="tab active">カリキュラム進捗</div>
+</div>
+
+<div class="curriculum-container">
+  <table class="curriculum-table">
+    <thead>
+      <tr>
+        <th>教材</th>
+        <th>単元</th>
+        <th>進捗</th>
+        <th>最終更新日</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% textbooks.each do |textbook| %>
+        <% textbook.units.order(:id).each_with_index do |unit, index| %>
+          <% progress = unit.progresses.find_by(student_id: student.id) %>
+          <tr>
+            <% if index == 0 %>
+              <td rowspan="<%= textbook.units.count %>" class="curriculum-textbook">
+                <div class="textbook-title major"><%= textbook.title %></div>
+              </td>
+            <% end %>
+            <td class="curriculum-textbook">
+              <div class="textbook-title"><%= unit.title %></div>
+            </td>
+            <td><%= progress&.status_i18n || "未着手" %></td>
+            <td><%= progress ? l(progress.updated_at, format: :short) : "─" %></td>
+            <td></td>
+          </tr>
+        <% end %>
       <% end %>
-    </div>
-
-    <% textbook.units.each do |unit| %>
-      <% progress = unit.progresses.find_by(student_id: student.id) %>
-      <p>
-        <strong><%= unit.title %></strong>
-        ： <%= progress&.status || "未登録" %>
-      </p>
-    <% end %>
-  <% end %>
+    </tbody>
+  </table>
 </div>

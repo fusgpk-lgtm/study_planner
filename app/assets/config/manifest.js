@@ -4,3 +4,4 @@
 //= link_tree ../../../vendor/javascript .js
 
 //= link user/registration.css
+//= link students.css
