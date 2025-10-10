@@ -2,74 +2,117 @@
   <h2 class="student-detail-name"><%= @student.name %> さんのカリキュラム</h2>
   <p class="student-detail-goal">目標: <%= @student.goal_school %></p>
 
-  <!-- タブ（見た目だけ） -->
-  <div class="student-tabs">
-    <span class="tab active">カリキュラム</span>
-    <span class="tab">概要・成績</span>
-    <span class="tab">授業履歴</span>
-  </div>
+  <% if current_user.teacher? %>
+    <!-- 講師用表示 -->
+    <%= render "teacher_view", student: @student, textbooks: @textbooks %>
 
-  <!-- カリキュラム表 -->
-  <div class="curriculum-container">
-    <table class="curriculum-table">
-      <thead>
-        <tr>
-          <th>教材 / 単元名</th>
-          <th>年間スケジュール</th>
-        </tr>
-      </thead>
+    <!-- タブ（見た目だけ） -->
+    <div class="student-tabs">
+      <span class="tab active">カリキュラム</span>
+      <span class="tab">概要・成績</span>
+      <span class="tab">授業履歴</span>
+    </div>
 
-      <tbody>
-        <% @textbooks.each do |textbook| %>
-          <!-- 教材名と単元追加ボタン -->
-          <tr class="textbook-header">
-            <td colspan="2">
-              <div class="textbook-header-content">
-                <strong><%= textbook.title %></strong>
-                <%= link_to new_textbook_unit_path(textbook), class: "btn-add-unit" do %>
-                  <i data-lucide="plus-circle" class="icon"></i>
-                  単元を追加
-                <% end %>
-              </div>
-            </td>
+    <!-- カリキュラム表 -->
+    <div class="curriculum-container">
+      <table class="curriculum-table">
+        <thead>
+          <tr>
+            <th>教材 / 単元名</th>
+            <th>年間スケジュール</th>
           </tr>
+        </thead>
 
-          <% textbook.units.each do |unit| %>
-            <% progress = unit.progresses.find_by(student_id: @student.id) %>
-            <% completed = progress ? (progress.completed || 0) : 0 %>
-
-            <tr>
-              <td class="curriculum-textbook">
-                <div class="textbook-unit"><%= unit.title %></div>
-              </td>
-
-              <td class="curriculum-progress">
-                <div class="progress-bar-container"
-                     title="<%= progress&.start_date&.strftime('%m/%d') %> ~ <%= progress&.end_date&.strftime('%m/%d') %>">
-                  <div class="progress-bar"
-                       style="width: <%= completed %>%;
-                              background-color: <%= completed == 100 ? '#10b981' : '#6366f1' %>;">
-                    <span class="progress-text"><%= completed %>%</span>
-                  </div>
+        <tbody>
+          <% @textbooks.each do |textbook| %>
+            <!-- 教材名と単元追加ボタン -->
+            <tr class="textbook-header">
+              <td colspan="2">
+                <div class="textbook-header-content">
+                  <strong><%= textbook.title %></strong>
+                  <%= link_to new_textbook_unit_path(textbook), class: "btn-add-unit" do %>
+                    <i data-lucide="plus-circle" class="icon"></i>
+                    単元を追加
+                  <% end %>
                 </div>
-
-                <% if progress&.start_date && progress&.end_date %>
-                  <p class="progress-date">
-                    <%= progress.start_date.strftime('%m/%d') %> ~ <%= progress.end_date.strftime('%m/%d') %>
-                  </p>
-                <% end %>
               </td>
             </tr>
+
+            <% textbook.units.each do |unit| %>
+              <% progress = unit.progresses.find_by(student_id: @student.id) %>
+              <% completed = progress ? (progress.completed || 0) : 0 %>
+
+              <tr>
+                <td class="curriculum-textbook">
+                  <div class="textbook-unit"><%= unit.title %></div>
+                </td>
+
+                <td class="curriculum-progress">
+                  <div class="progress-bar-container"
+                      title="<%= progress&.start_date&.strftime('%m/%d') %> ~ <%= progress&.end_date&.strftime('%m/%d') %>">
+                    <div class="progress-bar"
+                        style="width: <%= completed %>%;
+                                background-color: <%= completed == 100 ? '#10b981' : '#6366f1' %>;">
+                      <span class="progress-text"><%= completed %>%</span>
+                    </div>
+                  </div>
+
+                  <% if progress&.start_date && progress&.end_date %>
+                    <p class="progress-date">
+                      <%= progress.start_date.strftime('%m/%d') %> ~ <%= progress.end_date.strftime('%m/%d') %>
+                    </p>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="add-unit-global">
+      <%= link_to new_textbook_unit_path(@textbooks.first), class: "btn-add" do %>
+        <i data-lucide="plus-circle" class="icon"></i>
+        新しい教材に単元を追加
+      <% end %>
+    </div>
+  <% elsif current_user.student? && current_user.id == @student.user_id %>
+    <!-- 生徒本人用表示 -->
+    <%= render "student_view", student: @student %>
+      <div class="student-progress">
+  <h2><%= @student.name %> さんの今日の学習</h2>
+
+  <% if @progresses.any? %>
+    <table class="progress-table">
+      <thead>
+        <tr>
+          <th>教材 / 単元</th>
+          <th>進捗</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @progresses.each do |progress| %>
+          <tr>
+            <td><%= progress.unit.textbook.title %> - <%= progress.unit.title %></td>
+            <td><%= progress.completed %>%</td>
+            <td>
+              <% if progress.completed < 100 %>
+                <%= button_to "完了！", progress_path(progress, student_id: @student.id),
+                    method: :patch,
+                    class: "btn-complete",
+                    data: { confirm: "この単元を完了にしますか？" } %>
+              <% else %>
+                ✅ 完了済
+              <% end %>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>
-  </div>
-
-  <div class="add-unit-global">
-    <%= link_to new_textbook_unit_path(@textbooks.first), class: "btn-add" do %>
-      <i data-lucide="plus-circle" class="icon"></i>
-      新しい教材に単元を追加
-    <% end %>
-  </div>
+  <% else %>
+    <p>今日の学習タスクはありません。</p>
+  <% end %>
+</div>
+  <% end %>
 </div>

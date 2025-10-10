@@ -167,3 +167,34 @@ body {
   height: 20px;
   margin-right: 8px;
 }
+
+/* --- 生徒画面 --- */
+
+.student-progress {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.progress-table th,
+.progress-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem;
+}
+
+.btn-complete {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-complete:hover {
+  background-color: #059669;
+}
