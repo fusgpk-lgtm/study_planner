@@ -1,48 +1,124 @@
-# README
+# アプリケーション名
+**StudyPlanner（スタディプランナー）**
 
-## Usersテーブル
+---
 
-| Column | Type   | Options.   |
-|--------|--------|------------|
-| name   | string | null:false |
-| email  | string | null:false, unique:true |
-| encrypted_password | string  | null:false |
-| role   | string | null:false |
+## アプリケーション概要
+個別指導塾での生徒一人ひとりの学習進捗を、講師と生徒・保護者が共有できる学習管理アプリです。  
+教材や単元ごとの進捗を可視化し、指導計画の作成・日々の学習管理を効率化します。
 
-### Association
-has_many:students
+---
 
-## Studentsテーブル
+## URL
+デプロイ準備中  
+（※デプロイ完了後に追記）
 
-| Column      | Type   | Options.   |
-|-------------|--------|------------|
-| stu_name    | string | null:false |
-| goal_school | string | null:false |
-| start_date  | date   | null:false |
-| goal_date   | date   | null:false |
+---
 
-### Association
-has_many:plans
+## テスト用アカウント
+| 種別  | メールアドレス       | パスワード |
+|----- |--------------------|---------- |
+| 講師 | teacher@example.com | password |
+| 生徒 | student@example.com | password |
 
-## Plansテーブル
+**Basic認証**
+- ID：`admin`  
+- Pass：`2222`
 
-| Column      | Type   | Options.   |
-|-------------|--------|------------|
-| start_date  | date   | null:false |
-| goal_date   | date   | null:false |
-| student_id  | references | foreign_key:true |
-| material_id | references | foreign_key:true |
+---
 
-### Association
-belongs_to:student
-belongs_to:material
+## 利用方法
+1. ログイン画面から講師または生徒としてログインします。  
+2. 講師アカウントでは、生徒一覧ページから各生徒の進捗を確認できます。  
+3. 生徒アカウントでは、自分専用のカリキュラム進捗ページが表示されます。  
+4. 「完了」ボタンで単元ごとの進捗を更新できます。  
+5. 教材・単元は講師が追加・編集できます。
 
-## Materialsテーブル
+---
 
-| Column         | Type    | Options.   |
-|----------------|---------|------------|
-| title          | string  | null:false |
-| weeks_required | integer | null:false |
+## アプリケーションを作成した背景
+個人塾で働く講師の友人から、「生徒ごとに教材や進度が違うため管理が大変」という悩みを聞いたことがきっかけです。  
+紙やスプレッドシートでは煩雑になりやすく、進捗確認や保護者共有にも手間がかかっていました。  
+このアプリでは、**講師の管理負担を軽減し、生徒の学習意欲を高める**ことを目的としています。
 
-### Association
-has_many:plans
+---
+
+## 実装した機能一覧（画像・GIF）
+- ログイン機能（Devise）
+- 講師・生徒でレイアウト切り替え  
+- 学習進捗の可視化（進捗バー表示）  
+- 完了ボタンによる進捗更新  
+- 教材・単元の登録機能  
+- Basic認証によるアクセス制限  
+- Turboを利用したスムーズな画面更新  
+
+※画像・GIFはGyazoまたはGyazoGIFを利用して添付予定。
+
+---
+
+## 実装予定の機能
+- 保護者アカウント（進捗の閲覧のみ）  
+- 単元別コメント・メモ機能  
+- カレンダー形式での学習スケジュール管理  
+- スマートフォン最適化（レスポンシブ対応）  
+
+---
+
+## データベース設計
+ER図（例）  
+※draw.ioやdbdiagram.io等で作成し、画像を添付
+
+---
+
+## 画面遷移図
+画面遷移図を添付（例：Figma / Whimsicalなど）
+
+---
+
+## 開発環境
+- Ruby 3.2.0  
+- Ruby on Rails 7.1.5  
+- MySQL 8.0  
+- Devise  
+- Importmap / Turbo / Stimulus  
+- HTML / CSS / JavaScript  
+- GitHub / Render（デプロイ予定）
+
+---
+
+## ローカルでの動作方法
+```bash
+# リポジトリのクローン
+git clone https://github.com/fusgpk-lgtm/study_planner.git
+cd study_planner
+
+# パッケージインストール
+bundle install
+
+# データベース作成
+rails db:create
+rails db:migrate
+
+# サーバー起動
+rails s
+```
+
+---
+
+## 工夫したポイント
+-	ユーザー権限別レイアウトを導入し、講師・生徒でUIを切り替え。
+-	OpenStructを活用してダミーデータを扱いやすく設計。
+-	デザインはシンプルで見やすく、進捗を視覚的に把握できるUIを意識。
+-	Turbo + Importmapを利用し、モダンで軽量なRails構成を実現。
+
+---
+
+## 改善点
+-	完了ボタンをAjax化してリアルタイム反映。
+-	講師による教材テンプレート管理機能を追加。
+-	学習データをもとに自動スケジュール提案を実装。
+
+---
+
+## 制作時間
+約60時間（企画〜設計〜実装〜デザイン調整）
