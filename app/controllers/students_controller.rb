@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_access, only: [:show]
+  layout :select_layout
   def index
     @students = Student.all
   end
@@ -30,5 +31,15 @@ class StudentsController < ApplicationController
 
   def student_params
     params.require(:student).permit(:name, :goal_school, :start_date, :goal_date)
+  end
+
+  def select_layout
+    if current_user.teacher?
+      'teacher'
+    elsif current_user.student?
+      'student'
+    else
+      'application' # fallback
+    end
   end
 end

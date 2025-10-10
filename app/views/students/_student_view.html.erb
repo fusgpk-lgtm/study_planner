@@ -1,0 +1,38 @@
+<div class="student-progress">
+  <h2><%= student.name %> さんの今日のカリキュラム</h2>
+
+  <% progresses = student.progresses.includes(:unit).where(status: [:not_started, :in_progress]) %>
+
+  <% if progresses.any? %>
+    <table class="progress-table">
+      <thead>
+        <tr>
+          <th>教材 / 単元</th>
+          <th>進捗</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% progresses.each do |progress| %>
+          <tr>
+            <td><%= progress.unit.textbook.title %> - <%= progress.unit.title %></td>
+            <td><%= progress.completed %>%</td>
+            <td>
+              <% if progress.completed < 100 %>
+                <%= button_to "完了！",
+                    progress_path(progress, student_id: student.id),
+                    method: :patch,
+                    class: "btn-complete",
+                    data: { confirm: "この単元を完了にしますか？" } %>
+              <% else %>
+                ✅ 完了済
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>今日はやることがありません！</p>
+  <% end %>
+</div>
