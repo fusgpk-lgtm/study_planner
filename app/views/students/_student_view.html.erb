@@ -13,37 +13,42 @@
     <div class="textbook-section">
       <h3 class="textbook-title"><%= textbook.title %></h3>
 
-      <table class="unit-table">
-        <thead>
-          <tr>
-            <th>単元</th>
-            <th>進捗</th>
-            <th>期間</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% textbook.units.each do |unit| %>
+      <!-- スマホ対応：tableをスクロールできるように -->
+      <div class="table-wrapper">
+        <table class="unit-table">
+          <thead>
             <tr>
-              <td><%= unit.title %></td>
-              <td>
-                <div class="unit-progress-bar">
-                  <div class="fill" style="width: <%= unit.progress %>%;"></div>
-                </div>
-                <span class="progress-text"><%= unit.progress %>%</span>
-              </td>
-              <td><%= unit.start_date %> ~ <%= unit.end_date %></td>
-              <td>
-                <% if unit.progress < 100 %>
-                  <button class="btn-complete">完了</button>
-                <% else %>
-                  <span class="status-done">完了済み</span>
-                <% end %>
-              </td>
+              <th>単元</th>
+              <th>進捗</th>
+              <th>期間</th>
+              <th>操作</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% textbook.units.each do |unit| %>
+              <tr>
+                <td class="unit-title"><%= unit.title %></td>
+                <td class="unit-progress">
+                  <div class="unit-progress-bar">
+                    <div class="fill" style="width: <%= unit.progress %>%;"></div>
+                  </div>
+                  <span class="progress-text"><%= unit.progress %>%</span>
+                </td>
+                <td class="unit-dates">
+                  <%= unit.start_date %> ~ <%= unit.end_date %>
+                </td>
+                <td class="unit-actions">
+                  <% if unit.progress < 100 %>
+                    <button class="btn-complete">完了</button>
+                  <% else %>
+                    <span class="status-done">完了済み</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   <% end %>
 </div>

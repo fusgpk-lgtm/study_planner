@@ -1,69 +1,80 @@
-/* app/assets/stylesheets/students.css */
-.student-wrapper {
-  background-color: #f9fafb;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
+/* 全体レイアウト */
 .student-detail {
   background: #fff;
   border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.textbook-section {
-  margin-top: 32px;
-}
-
-.textbook-title {
-  font-size: 1.2rem;
+.student-detail-name {
+  font-size: 1.4rem;
   font-weight: bold;
-  color: #374151;
-  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.student-detail-goal {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+/* テーブル */
+.table-wrapper {
+  overflow-x: auto; /* スマホ横スクロール対応 */
 }
 
 .unit-table {
   width: 100%;
+  min-width: 600px; /* 表が崩れないよう固定幅 */
   border-collapse: collapse;
+  text-align: center;
 }
 
-.unit-table th, .unit-table td {
-  padding: 12px;
-  text-align: left;
+.unit-table th {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 10px;
+  font-weight: 600;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.unit-table td {
+  padding: 12px 8px;
   border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
 }
 
+/* 進捗バー */
 .unit-progress-bar {
   width: 100px;
   height: 8px;
   background: #e5e7eb;
   border-radius: 4px;
   overflow: hidden;
-  display: inline-block;
-  margin-right: 8px;
+  margin: 0 auto 6px auto;
 }
 
 .unit-progress-bar .fill {
   height: 100%;
   background-color: #6366f1;
+  transition: width 0.3s ease;
 }
 
 .progress-text {
   font-size: 0.85rem;
-  color: #4b5563;
+  color: #374151;
 }
 
+/* ボタン */
 .btn-complete {
-  background-color: #10b981;
+  background-color: #dc2626;
   color: white;
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .btn-complete:hover {
@@ -72,24 +83,35 @@
 
 .status-done {
   color: #6b7280;
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.progress-summary {
-  margin-bottom: 24px;
-}
+/* スマホ対応 */
+@media (max-width: 768px) {
+  .student-detail {
+    padding: 16px;
+  }
 
-.progress-bar-container {
-  width: 100%;
-  background-color: #e5e7eb;
-  border-radius: 8px;
-  height: 10px;
-  overflow: hidden;
-}
+  .student-detail-name {
+    font-size: 1.2rem;
+  }
 
-.progress-bar {
-  height: 10px;
-  background-color: #4f46e5;
-  border-radius: 8px;
-  transition: width 0.3s ease;
+  .unit-table {
+    min-width: 100%;
+  }
+
+  .unit-table th, .unit-table td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .btn-complete {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .progress-text {
+    display: block;
+    margin-top: 4px;
+  }
 }

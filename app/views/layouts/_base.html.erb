@@ -12,6 +12,8 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- ここを追加：各レイアウト固有のCSSを挿入する口 -->
+    <%= yield :extra_css %>
   </head>
 
   <body>
