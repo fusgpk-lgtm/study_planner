@@ -6,7 +6,13 @@ class ApplicationController < ActionController::Base
     if resource.teacher?
       students_path
     elsif resource.student?
-      student_path(resource.student)
+      # 生徒がログインしたら自分の show ページへ
+      if resource.student.present?
+        student_path(resource.student)
+      else
+        # 万一 Student が紐づいていない場合は安全に root に戻す
+        root_path
+      end
     else
       root_path
     end
