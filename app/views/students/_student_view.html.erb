@@ -1,38 +1,49 @@
-<div class="student-progress">
-  <h2><%= student.name %> さんの今日のカリキュラム</h2>
+<div class="student-detail">
+  <h2 class="student-detail-name"><%= @student.name %> さんの学習スケジュール</h2>
+  <p class="student-detail-goal">目標校：<%= @student.goal_school %></p>
 
-  <% progresses = student.progresses.includes(:unit).where(status: [:not_started, :in_progress]) %>
+  <div class="progress-summary">
+    <p>全体進捗：<%= @student.progress_percentage %>%</p>
+    <div class="progress-bar-container">
+      <div class="progress-bar" style="width: <%= @student.progress_percentage %>%;"></div>
+    </div>
+  </div>
 
-  <% if progresses.any? %>
-    <table class="progress-table">
-      <thead>
-        <tr>
-          <th>教材 / 単元</th>
-          <th>進捗</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% progresses.each do |progress| %>
+  <% @textbooks.each do |textbook| %>
+    <div class="textbook-section">
+      <h3 class="textbook-title"><%= textbook.title %></h3>
+
+      <table class="unit-table">
+        <thead>
           <tr>
-            <td><%= progress.unit.textbook.title %> - <%= progress.unit.title %></td>
-            <td><%= progress.completed %>%</td>
-            <td>
-              <% if progress.completed < 100 %>
-                <%= button_to "完了！",
-                    progress_path(progress, student_id: student.id),
-                    method: :patch,
-                    class: "btn-complete",
-                    data: { confirm: "この単元を完了にしますか？" } %>
-              <% else %>
-                ✅ 完了済
-              <% end %>
-            </td>
+            <th>単元</th>
+            <th>進捗</th>
+            <th>期間</th>
+            <th>操作</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <p>今日はやることがありません！</p>
+        </thead>
+        <tbody>
+          <% textbook.units.each do |unit| %>
+            <tr>
+              <td><%= unit.title %></td>
+              <td>
+                <div class="unit-progress-bar">
+                  <div class="fill" style="width: <%= unit.progress %>%;"></div>
+                </div>
+                <span class="progress-text"><%= unit.progress %>%</span>
+              </td>
+              <td><%= unit.start_date %> ~ <%= unit.end_date %></td>
+              <td>
+                <% if unit.progress < 100 %>
+                  <button class="btn-complete">完了</button>
+                <% else %>
+                  <span class="status-done">完了済み</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 </div>

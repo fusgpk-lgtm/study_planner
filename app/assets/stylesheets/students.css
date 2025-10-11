@@ -6,3 +6,90 @@
   max-width: 800px;
   margin: 0 auto;
 }
+
+.student-detail {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.textbook-section {
+  margin-top: 32px;
+}
+
+.textbook-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.unit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.unit-table th, .unit-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.unit-progress-bar {
+  width: 100px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.unit-progress-bar .fill {
+  height: 100%;
+  background-color: #6366f1;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.btn-complete {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-complete:hover {
+  background-color: #059669;
+}
+
+.status-done {
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.progress-summary {
+  margin-bottom: 24px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #4f46e5;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
