@@ -1,7 +1,41 @@
-.teacher-wrapper {
-  background-color: #eef6ff;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 1000px;
-  margin: 0 auto;
+.teacher-student-detail {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.template-info h3 {
+  margin-top: 16px;
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+
+.template-description {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.template-table-wrapper {
+  overflow-x: auto;
+}
+
+.template-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.template-table th {
+  background-color: #f3f4f6;
+  color: #374151;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.template-table td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
 }

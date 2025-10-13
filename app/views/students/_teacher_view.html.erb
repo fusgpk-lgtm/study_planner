@@ -1,42 +1,34 @@
-<div class="student-detail">
-  <div class="student-detail-name"><%= student.name %> さんの進捗管理</div>
-  <div class="student-detail-goal">目標：<%= student.goal_school %></div>
-</div>
+<div class="teacher-student-detail">
+  <h2><%= @student.name %> さんのカリキュラム</h2>
+  <p>志望校：<%= @student.goal_school %></p>
 
-<div class="student-tabs">
-  <div class="tab active">カリキュラム進捗</div>
-</div>
+  <% if @student.curriculum_template.present? %>
+    <div class="template-info">
+      <h3>📘 カリキュラムテンプレート：<%= @student.curriculum_template.name %></h3>
+      <p class="template-description"><%= @student.curriculum_template.description %></p>
+    </div>
 
-<div class="curriculum-container">
-  <table class="curriculum-table">
-    <thead>
-      <tr>
-        <th>教材</th>
-        <th>単元</th>
-        <th>進捗</th>
-        <th>最終更新日</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% textbooks.each do |textbook| %>
-        <% textbook.units.order(:id).each_with_index do |unit, index| %>
-          <% progress = unit.progresses.find_by(student_id: student.id) %>
+    <div class="template-table-wrapper">
+      <table class="template-table">
+        <thead>
           <tr>
-            <% if index == 0 %>
-              <td rowspan="<%= textbook.units.count %>" class="curriculum-textbook">
-                <div class="textbook-title major"><%= textbook.title %></div>
-              </td>
-            <% end %>
-            <td class="curriculum-textbook">
-              <div class="textbook-title"><%= unit.title %></div>
-            </td>
-            <td><%= progress&.status_i18n || "未着手" %></td>
-            <td><%= progress ? l(progress.updated_at, format: :short) : "─" %></td>
-            <td></td>
+            <th>教材名</th>
+            <th>使用開始</th>
+            <th>使用終了</th>
           </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+          <% @student.curriculum_template.template_items.includes(:textbook).each do |item| %>
+            <tr>
+              <td><%= item.textbook.title %></td>
+              <td><%= item.start_date.strftime('%Y/%m/%d') %></td>
+              <td><%= item.end_date.strftime('%Y/%m/%d') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>この生徒にはカリキュラムテンプレートが設定されていません。</p>
+  <% end %>
 </div>

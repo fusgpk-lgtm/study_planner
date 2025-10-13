@@ -14,32 +14,22 @@ class StudentsController < ApplicationController
   end
 
   def create
-    Student.create(student_params)
-    redirect_to students_path
+    @student = Student.new(student_params)
+
+    # 志望校に対応するテンプレートを自動設定
+    template = CurriculumTemplate.find_by(goal_school: @student.goal_school)
+    @student.curriculum_template = template if template.present?
+
+    if @student.save
+      redirect_to @student, notice: "生徒を登録しました。"
+    else
+      render :new
+    end
   end
 
   def show
     @student = Student.find(params[:id])
-    @textbooks = Textbook.includes(units: :progresses)
-
-    # 仮の教材データ
-    @textbooks = [
-      OpenStruct.new(
-        title: '数学ⅠA',
-        units: [
-          OpenStruct.new(title: '数と式', progress: 100, start_date: '2025-09-01', end_date: '2025-09-10'),
-          OpenStruct.new(title: '集合と命題', progress: 60, start_date: '2025-09-11', end_date: '2025-09-20'),
-          OpenStruct.new(title: '二次関数', progress: 20, start_date: '2025-09-21', end_date: '2025-10-05')
-        ]
-      ),
-      OpenStruct.new(
-        title: '英語文法',
-        units: [
-          OpenStruct.new(title: '時制', progress: 90, start_date: '2025-09-05', end_date: '2025-09-15'),
-          OpenStruct.new(title: '助動詞', progress: 50, start_date: '2025-09-16', end_date: '2025-09-30')
-        ]
-      )
-    ]
+    @template_items = @student.curriculum_template&.template_items&.includes(:textbook)
   end
 
   private

@@ -38,6 +38,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_13_135627) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "curriculum_template_id", null: false
+    t.index ["curriculum_template_id"], name: "index_students_on_curriculum_template_id"
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 
