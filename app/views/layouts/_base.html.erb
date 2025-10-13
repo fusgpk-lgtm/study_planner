@@ -21,9 +21,11 @@
       <h1 class="header-title">個別指導カリキュラム管理</h1>
 
       <div class="header-actions">
-        <%= link_to students_path, class: "home-button" do %>
-          <i data-lucide="home" class="icon"></i>
-          <span class="text">ホームに戻る</span>
+        <% if current_user&.teacher? %>
+          <%= link_to students_path, class: "home-button" do %>
+            <i data-lucide="home" class="icon"></i>
+            <span class="text">ホームに戻る</span>
+          <% end %>
         <% end %>
 
         <%= button_to destroy_user_session_path,
