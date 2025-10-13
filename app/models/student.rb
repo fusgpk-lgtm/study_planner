@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
   belongs_to :user
+  belongs_to :curriculum_template, optional: true
   has_many :progresses, dependent: :destroy
   has_many :units, through: :progresses
 
