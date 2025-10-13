@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_10_080112) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_13_135627) do
+  create_table "curriculum_templates", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "goal_school"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "progresses", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "student_id", null: false
     t.bigint "unit_id", null: false
@@ -31,6 +39,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_10_080112) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_students_on_user_id"
+  end
+
+  create_table "template_items", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "curriculum_template_id", null: false
+    t.bigint "textbook_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["curriculum_template_id"], name: "index_template_items_on_curriculum_template_id"
+    t.index ["textbook_id"], name: "index_template_items_on_textbook_id"
   end
 
   create_table "textbooks", charset: "utf8mb3", force: :cascade do |t|
@@ -66,5 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_10_080112) do
   add_foreign_key "progresses", "students"
   add_foreign_key "progresses", "units"
   add_foreign_key "students", "users"
+  add_foreign_key "template_items", "curriculum_templates"
+  add_foreign_key "template_items", "textbooks"
   add_foreign_key "units", "textbooks"
 end
