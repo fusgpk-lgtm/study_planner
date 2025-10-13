@@ -20,22 +20,24 @@
     <header class="app-header">
       <h1 class="header-title">個別指導カリキュラム管理</h1>
 
-      <div class="header-actions">
-        <% if current_user&.teacher? %>
-          <%= link_to students_path, class: "home-button" do %>
-            <i data-lucide="home" class="icon"></i>
-            <span class="text">ホームに戻る</span>
+      <% if current_user.present? %>
+        <div class="header-actions">
+          <% if current_user.teacher? %>
+            <%= link_to students_path, class: "home-button" do %>
+              <i data-lucide="home" class="icon"></i>
+              <span class="text">ホームに戻る</span>
+            <% end %>
           <% end %>
-        <% end %>
 
-        <%= button_to destroy_user_session_path,
-                      method: :delete,
-                      class: "logout-button",
-                      data: { turbo: false } do %>
-          <i data-lucide="log-out" class="icon"></i>
-          ログアウト
-        <% end %>
-      </div>
+          <%= button_to destroy_user_session_path,
+                        method: :delete,
+                        class: "logout-button",
+                        data: { turbo: false } do %>
+            <i data-lucide="log-out" class="icon"></i>
+            ログアウト
+          <% end %>
+        </div>
+      <% end %>
     </header>
 
     <main class="main-container">
