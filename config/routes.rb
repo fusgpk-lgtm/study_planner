@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'study_times/create'
+  get 'study_times/index'
   get 'units/new'
   get 'units/create'
   root to: 'students#index'
