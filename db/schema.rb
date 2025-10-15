@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_13_135627) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_15_134128) do
   create_table "curriculum_templates", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -41,6 +41,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_13_135627) do
     t.bigint "curriculum_template_id", null: false
     t.index ["curriculum_template_id"], name: "index_students_on_curriculum_template_id"
     t.index ["user_id"], name: "index_students_on_user_id"
+  end
+
+  create_table "study_times", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.date "study_date"
+    t.integer "minutes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_study_times_on_student_id"
   end
 
   create_table "template_items", charset: "utf8mb3", force: :cascade do |t|
@@ -87,6 +96,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_13_135627) do
   add_foreign_key "progresses", "students"
   add_foreign_key "progresses", "units"
   add_foreign_key "students", "users"
+  add_foreign_key "study_times", "students"
   add_foreign_key "template_items", "curriculum_templates"
   add_foreign_key "template_items", "textbooks"
   add_foreign_key "units", "textbooks"
