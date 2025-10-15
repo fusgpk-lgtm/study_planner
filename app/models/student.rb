@@ -3,6 +3,7 @@ class Student < ApplicationRecord
   belongs_to :curriculum_template, optional: true
   has_many :progresses, dependent: :destroy
   has_many :units, through: :progresses
+  has_many :study_times, dependent: :destroy
 
   validates :name, :goal_school, :start_date, :goal_date, presence: true
 
