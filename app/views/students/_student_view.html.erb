@@ -51,4 +51,63 @@
       </div>
     </div>
   <% end %>
+
+  <hr>
+
+  <div class="study-time-section">
+  <h3>📊 学習時間の記録</h3>
+
+  <%= form_with model: [@student, StudyTime.new], local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :study_date, "日付" %>
+      <%= f.date_field :study_date, value: Date.today %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :minutes, "学習時間（分）" %>
+      <%= f.number_field :minutes, min: 1, step: 5 %>
+    </div>
+
+    <%= f.submit "記録する", class: "btn-save" %>
+  <% end %>
+</div>
+
+<hr>
+
+<div class="study-time-chart">
+  <h3>🗓 1週間の学習時間</h3>
+  <canvas id="studyChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("turbo:load", () => {
+    const ctx = document.getElementById("studyChart");
+    if (!ctx) return;
+
+    const labels = <%= @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+                              .order(:study_date)
+                              .pluck(:study_date).map(&:strftime).to_json.html_safe %>;
+    const data = <%= @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+                              .order(:study_date)
+                              .pluck(:minutes).to_json.html_safe %>;
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '学習時間（分）',
+          data: data,
+          backgroundColor: '#6366f1'
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: '分' } }
+        }
+      }
+    });
+  });
+</script>
 </div>

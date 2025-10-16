@@ -29,6 +29,7 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
+    @textbooks = Textbook.all 
     @template_items = @student.curriculum_template&.template_items&.includes(:textbook)
   end
 

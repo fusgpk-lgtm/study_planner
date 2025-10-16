@@ -1,16 +1,19 @@
 Rails.application.routes.draw do
-  get 'study_times/create'
-  get 'study_times/index'
-  get 'units/new'
-  get 'units/create'
   root to: 'students#index'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
 
+  # 講師用の登録ページ
   get '/teachers/sign_up', to: 'users/registrations#new', defaults: { role: 'teacher' }
-  resources :students
 
+  # 生徒
+  resources :students do
+    resources :study_times, only: [:index, :create] # 生徒ごとの学習時間
+  end
+
+  # 教材と単元
   resources :textbooks, only: [] do
     resources :units, only: [:new, :create]
   end
