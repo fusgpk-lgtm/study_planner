@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_access, only: [:show]
@@ -29,8 +27,6 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    @textbooks = Textbook.all 
-    @template_items = @student.curriculum_template&.template_items&.includes(:textbook)
     # 生徒のカリキュラムテンプレートに関連する教材のみを取得する
     @textbooks = @student.curriculum_template
                          &.textbooks
