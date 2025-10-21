@@ -116,7 +116,8 @@
   }
 }
 
-.study-time-section {
+.study-time-section,
+.study-time-chart {
   background: #fff;
   padding: 16px;
   border-radius: 12px;
@@ -124,9 +125,19 @@
   margin-top: 24px;
 }
 
-.study-time-chart {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  margin-top: 24px;
+.form-group {
+  margin-bottom: 12px;
+}
+
+.btn-save {
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background-color: #4f46e5;
 }

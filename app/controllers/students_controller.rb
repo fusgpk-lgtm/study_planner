@@ -26,12 +26,10 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params[:id])
-    # 生徒のカリキュラムテンプレートに関連する教材のみを取得する
-    @textbooks = @student.curriculum_template
-                         &.textbooks
-                         &.includes(:units) || []
-  end
+  @student = Student.find(params[:id])
+  @textbooks = Textbook.includes(units: :progresses)
+  @study_times = @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+end
 
   private
 
