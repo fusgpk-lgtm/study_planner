@@ -1,34 +1,93 @@
 <div class="teacher-student-detail">
-  <h2><%= @student.name %> さんのカリキュラム</h2>
-  <p>志望校：<%= @student.goal_school %></p>
+  <h2><%= @student.name %> さんの進捗管理</h2>
+  <p class="student-detail-goal">目標校：<%= @student.goal_school %></p>
 
-  <% if @student.curriculum_template.present? %>
-    <div class="template-info">
-      <h3>📘 カリキュラムテンプレート：<%= @student.curriculum_template.name %></h3>
-      <p class="template-description"><%= @student.curriculum_template.description %></p>
-    </div>
-
-    <div class="template-table-wrapper">
-      <table class="template-table">
-        <thead>
-          <tr>
-            <th>教材名</th>
-            <th>使用開始</th>
-            <th>使用終了</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @student.curriculum_template.template_items.includes(:textbook).each do |item| %>
+  <!-- カリキュラム進捗 -->
+  <section class="curriculum-section">
+    <h3>📘 カリキュラム進捗</h3>
+    <table class="curriculum-table">
+      <thead>
+        <tr>
+          <th>教材名</th>
+          <th>単元名</th>
+          <th>進捗率</th>
+          <th>期間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @textbooks.each do |textbook| %>
+          <% textbook.units.each do |unit| %>
+            <% progress = unit.progresses.find_by(student_id: @student.id) %>
+            <% completed = progress ? (progress.completed || 0) : 0 %>
             <tr>
-              <td><%= item.textbook.title %></td>
-              <td><%= item.start_date.strftime('%Y/%m/%d') %></td>
-              <td><%= item.end_date.strftime('%Y/%m/%d') %></td>
+              <td><%= textbook.title %></td>
+              <td><%= unit.title %></td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: <%= completed %>%;"></div>
+                  <span class="progress-text"><%= completed %>%</span>
+                </div>
+              </td>
+              <td>
+                <% if progress&.start_date && progress&.end_date %>
+                  <%= progress.start_date.strftime("%m/%d") %>〜<%= progress.end_date.strftime("%m/%d") %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <p>この生徒にはカリキュラムテンプレートが設定されていません。</p>
-  <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+
+  <hr>
+
+  <!-- 学習時間の可視化 -->
+  <section class="study-time-section">
+    <h3>⏰ 学習時間（直近1週間）</h3>
+    <canvas id="teacherStudyChart"></canvas>
+  </section>
 </div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("turbo:load", () => {
+    const ctx = document.getElementById("teacherStudyChart");
+    if (!ctx) return;
+
+    const labels = <%= @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+                             .order(:study_date)
+                             .pluck(:study_date)
+                             .map { |d| d.strftime('%m/%d') }
+                             .to_json.html_safe %>;
+
+    const data = <%= @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+                             .order(:study_date)
+                             .pluck(:minutes)
+                             .to_json.html_safe %>;
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '学習時間（分）',
+          data: data,
+          backgroundColor: '#6366f1'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: '分' }
+          }
+        }
+      }
+    });
+  });
+</script>
