@@ -12,24 +12,25 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.new(student_params)
+    # ログイン中のユーザー（講師）に紐づく生徒として作成
+    @student = current_user.students.new(student_params)
 
-    # 志望校に対応するテンプレートを自動設定
     template = CurriculumTemplate.find_by(goal_school: @student.goal_school)
     @student.curriculum_template = template if template.present?
 
     if @student.save
-      redirect_to @student, notice: "生徒を登録しました。"
+      redirect_to @student, notice: '生徒を登録しました。'
     else
-      render :new, status: :unprocessable_entity
+      Rails.logger.info @student.errors.full_messages.inspect
+      render :new, status: :unprocessable_content
     end
   end
 
   def show
-  @student = Student.find(params[:id])
-  @textbooks = Textbook.includes(units: :progresses)
-  @study_times = @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
-end
+    @student = Student.find(params[:id])
+    @textbooks = Textbook.includes(units: :progresses)
+    @study_times = @student.study_times.where(study_date: 7.days.ago.to_date..Date.today)
+  end
 
   private
 

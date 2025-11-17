@@ -14,6 +14,17 @@
       </p>
 
       <%= form_with(model: @student, url: students_path, class: "signup-form") do |form| %>
+        <% if @student && @student.errors.any? %>
+          <div class="error-messages">
+            <h3>入力内容にエラーがあります：</h3>
+            <ul>
+              <% @student.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
         <div>
           <%= form.label :name, "生徒名", class: "form-label" %>
           <%= form.text_field :name, class: "form-input", required: true %>
@@ -38,7 +49,7 @@
 
         <%= form.button type: 'submit', class: 'btn-primary submit-button' do %>
           <i data-lucide="save" class="icon"></i>
-          生徒を登録し、カリキュラム作成に進む
+          生徒を登録する
         <% end %>
       <% end %>
     </div>

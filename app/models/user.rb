@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
-  has_one :student, dependent: :destroy
+  has_many :students, dependent: :destroy
 
   private
 
