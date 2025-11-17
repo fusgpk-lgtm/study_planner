@@ -13,7 +13,7 @@ class StudentsController < ApplicationController
 
   def create
     # ログイン中のユーザー（講師）に紐づく生徒として作成
-    @student = current_user.students.new(student_params)
+    @student = Student.new(student_params)
 
     template = CurriculumTemplate.find_by(goal_school: @student.goal_school)
     @student.curriculum_template = template if template.present?
