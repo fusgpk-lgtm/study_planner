@@ -4,15 +4,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.teacher?
+      # 講師は生徒一覧へ
       students_path
     elsif resource.student?
-      # 生徒がログインしたら自分の show ページへ
-      if resource.student.present?
-        student_path(resource.student)
-      else
-        # 万一 Student が紐づいていない場合は安全に root に戻す
-        root_path
-      end
+      # 生徒ユーザーに紐づく Student レコードがあるならその詳細へ
+      student = resource.students.first || Student.find_by(user_id: resource.id)
+      student ? student_path(student) : root_path
     else
       root_path
     end
