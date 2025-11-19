@@ -15,10 +15,10 @@ https://study-planner-qy7g.onrender.com
 ---
 
 ## テスト用アカウント
-| 種別  | メールアドレス       | パスワード |
-|----- |--------------------|---------- |
-| 講師 | teacher@example.com | password |
-| 生徒 | student@example.com | password |
+| 種別  | メールアドレス       | パスワード    |
+|----- |--------------------|------------ |
+| 講師 | teacher@example.com | password123 |
+| 生徒 | student@example.com | password123 |
 
 **Basic認証**
 - ID：`admin`  
